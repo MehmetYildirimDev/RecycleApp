@@ -42,14 +42,15 @@ public class DBManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("db error");        }
+            Debug.Log("db error");
+        }
 
     }
 
     public void SaveUser()
     {
         string username = usernameInput.text;
-        string password= passwordInput.text;
+        string password = passwordInput.text;
         //dictionary : key, value
         Dictionary<string, object> user = new Dictionary<string, object>();
         user["username"] = username;
@@ -86,14 +87,13 @@ public class DBManager : MonoBehaviour
         {
             if (user.Key == "password")
             {
-                Debug.Log("password:" + user.Value.ToString()); 
+                Debug.Log("password:" + user.Value.ToString());
             }
-            if (user.Key=="username")
+            if (user.Key == "username")
             {
                 Debug.Log("Username:" + user.Value.ToString());
             }
         }
-
     }
 
 

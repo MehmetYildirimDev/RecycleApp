@@ -245,7 +245,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &202288757
 GameObject:
@@ -1223,9 +1223,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1883634039}
+      - m_Target: {fileID: 1281253856}
         m_TargetAssemblyTypeName: AuthManager, Assembly-CSharp
-        m_MethodName: RegisterButton
+        m_MethodName: UyeOl
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1431,6 +1431,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1146455045}
   m_CullTransparentMesh: 1
+--- !u!1 &1281253855
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1281253857}
+  - component: {fileID: 1281253856}
+  m_Layer: 0
+  m_Name: AuthManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1281253856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281253855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 557f1be4ee2ba674596a115d4572f08e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  girisEmail: {fileID: 6559084730104061456}
+  girisSifre: {fileID: 6559084729283977740}
+  uyeOlEmail: {fileID: 1104415655}
+  uyeOlSifre: {fileID: 948074119}
+  uyeOlSifreKontrol: {fileID: 202288759}
+--- !u!4 &1281253857
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281253855}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 623.3807, y: 898.39844, z: -82.367195}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1449062379
 GameObject:
   m_ObjectHideFlags: 0
@@ -2125,59 +2173,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &1883634038
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1883634040}
-  - component: {fileID: 1883634039}
-  m_Layer: 0
-  m_Name: AuthManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1883634039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1883634038}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 557f1be4ee2ba674596a115d4572f08e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dependencyStatus: 0
-  emailLoginField: {fileID: 6559084730104061456}
-  passwordLoginField: {fileID: 6559084729283977740}
-  warningLoginText: {fileID: 1449062381}
-  confirmLoginText: {fileID: 595078367}
-  usernameRegisterField: {fileID: 1819669635}
-  emailRegisterField: {fileID: 1104415655}
-  passwordRegisterField: {fileID: 948074119}
-  passwordRegisterVerifyField: {fileID: 202288759}
-  warningRegisterText: {fileID: 1121631820}
---- !u!4 &1883634040
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1883634038}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 550.05554, y: 1049.3385, z: -101.84921}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2002640356
 GameObject:
   m_ObjectHideFlags: 0
@@ -3288,9 +3283,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1883634039}
+      - m_Target: {fileID: 1281253856}
         m_TargetAssemblyTypeName: AuthManager, Assembly-CSharp
-        m_MethodName: LoginButton
+        m_MethodName: UyeGirisi
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
