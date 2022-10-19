@@ -36,10 +36,6 @@ public class AuthManager : MonoBehaviour
     }
     void Start()
     {
-
-    
-
-        
         reference = FirebaseDatabase.DefaultInstance.RootReference;//veritabanin refaransini tuttugumuz degisken
         //kullanici giris ya da cikis yapti ise burasi calisiyo //kullanici degisince burasi calisiyo
         auth.StateChanged += AuthStateChange;

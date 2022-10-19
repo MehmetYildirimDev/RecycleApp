@@ -12,17 +12,17 @@ public class DropDownScript : MonoBehaviour
     public Text textBox;
     public TMP_Dropdown dropdown;
 
-
     DatabaseReference reference;
 
 
-    public List<string> items = new List<string>();
-    public List<string> keyList = new List<string>();
+    public List<string> items;
+    public List<string> keyList;
     private void Start()
     {
         reference = FirebaseDatabase.DefaultInstance.RootReference;
+ 
 
-
+        
         dropdown.options.Clear();
 
 
@@ -43,7 +43,8 @@ public class DropDownScript : MonoBehaviour
 
         VerileriAl();
         Doldur();
-        Debug.Log(keyList.Count);
+        
+        
     }
 
     private void Doldur()
@@ -68,13 +69,17 @@ public class DropDownScript : MonoBehaviour
                     else
                     {//burada cozulecek her sey
                         
-                        Debug.Log("snapshot.Key: " + snapshot.Key + " BURADAYIZ ");
-
+                       // Debug.Log("snapshot.Key: " + snapshot.Key + " BURADAYIZ ");
+                        ItemData data1 = JsonUtility.FromJson<ItemData>(snapshot.GetRawJsonValue());
+                        Debug.Log("name, ucret: " + data1.Name + data1.ucreti);
+                        
+                        
                     }
                 }
 
             });
         }
+
         //reference.Child("Items").GetValueAsync().ContinueWithOnMainThread(task =>
         //{
         //    if (task.IsFaulted)
@@ -123,7 +128,7 @@ public class DropDownScript : MonoBehaviour
             else if (task.IsCompleted)
             {
                 DataSnapshot snapshot = task.Result;
-                Debug.Log(snapshot.Key);//bunun ciktisi cam sisi(vs) yani basligi
+               // Debug.Log(snapshot.Key);//bunun ciktisi cam sisi(vs) yani basligi
                 //Debug.Log(snapshot.GetRawJsonValue());
                 if (snapshot.GetRawJsonValue() == null)//bu bos ise henuz veri kaydi olusturmamisiz demek
                 {
@@ -134,10 +139,10 @@ public class DropDownScript : MonoBehaviour
                 else
                 {
                     //varsa direk cekiyoruz
-                    Debug.Log(snapshot.GetRawJsonValue());
+                   // Debug.Log(snapshot.GetRawJsonValue());
                     //jsondan objeye - objeden jsona cevirme
                     ItemData data = JsonUtility.FromJson<ItemData>(snapshot.GetRawJsonValue());
-                    Debug.Log(data.ucreti);
+                   // Debug.Log(data.ucreti);
                 }
             }
         });
@@ -147,6 +152,7 @@ public class DropDownScript : MonoBehaviour
     {
         ItemData bosveri = new ItemData
         {
+            Name = "",
             gramaj = 0,
             ucreti = 0,
             type = 0

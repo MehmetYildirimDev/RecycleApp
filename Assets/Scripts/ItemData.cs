@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ItemData 
 {
+    public string Name;
     public int type;
     public int gramaj;
     public float ucreti;
 
-
-
+ 
 
 }
