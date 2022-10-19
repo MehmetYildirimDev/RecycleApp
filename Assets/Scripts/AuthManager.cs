@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Firebase;
 using Firebase.Auth;
 using Firebase.Extensions;
+using Firebase.Database;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -19,9 +20,13 @@ public class AuthManager : MonoBehaviour
     [SerializeField] InputField uyeOlEmail;
     [SerializeField] InputField uyeOlSifre;
     [SerializeField] InputField uyeOlSifreKontrol;
+    [SerializeField] InputField uyeOlName;
+    [SerializeField] InputField uyeOlLastName;
+    [SerializeField] InputField uyeOlAdress;    
 
     //kullanici islemleri icin bir degisken
     FirebaseAuth auth;
+    DatabaseReference reference;
 
 
     void Awake()
@@ -31,13 +36,19 @@ public class AuthManager : MonoBehaviour
     }
     void Start()
     {
+
+    
+
+        
+        reference = FirebaseDatabase.DefaultInstance.RootReference;//veritabanin refaransini tuttugumuz degisken
         //kullanici giris ya da cikis yapti ise burasi calisiyo //kullanici degisince burasi calisiyo
         auth.StateChanged += AuthStateChange;
         
         //buraa bir daha yapiyoruz
         if (auth.CurrentUser != null)
         {
-            SceneManager.LoadScene("MainScene");
+            //  SceneManager.LoadScene("MainScene");
+            auth.SignOut();
         }
     }
 
@@ -70,8 +81,22 @@ public class AuthManager : MonoBehaviour
                 Firebase.Auth.FirebaseUser newUser = task.Result;
                 Debug.LogFormat("Firebase user created successfully: {0} ({1})",
                     newUser.DisplayName, newUser.UserId);
+
+                //burada yapmaliyim islemleri
+                OyunData oyunData = new OyunData();
+                oyunData.Name = uyeOlName.text;
+                oyunData.LastName = uyeOlLastName.text;
+                oyunData.Adress = uyeOlAdress.text;
+                oyunData.AllPayment = 0f;
+
+                //jsona ceviriyoruz burada 
+                string FirstJson = JsonUtility.ToJson(oyunData);
+                //database yazdiriyoruz
+                reference.Child("OyunVerileri").Child(auth.CurrentUser.UserId).SetRawJsonValueAsync(FirstJson);
+
             });
 
+            
         }
         else
         {
@@ -98,31 +123,58 @@ public class AuthManager : MonoBehaviour
 
         return true;
     }
-
     public void UyeGirisi()
     {
-
-        if (GirisVeriKontrol())
+        if (auth.CurrentUser == null)
         {
-            auth.SignInWithEmailAndPasswordAsync(girisEmail.text, girisSifre.text).ContinueWith(task => {//giris icin kontrol ediyo
-                if (task.IsCanceled)
-                {
-                    Debug.Log("SignInWithEmailAndPasswordAsync was canceled.");
-                    return;
-                }
-                if (task.IsFaulted)
-                {
-                    Debug.Log("SignInWithEmailAndPasswordAsync encountered an error: " + task.Exception);
-                    return;
-                }
+            if (GirisVeriKontrol())
+            {
+                auth.SignInWithEmailAndPasswordAsync(girisEmail.text, girisSifre.text).ContinueWith(task => {//giris icin kontrol ediyo
+                    if (task.IsCanceled)
+                    {
+                        Debug.Log("SignInWithEmailAndPasswordAsync was canceled.");
+                        return;
+                    }
+                    if (task.IsFaulted)
+                    {
+                        Debug.Log("SignInWithEmailAndPasswordAsync encountered an error: " + task.Exception);
+                        return;
+                    }
 
-                Firebase.Auth.FirebaseUser newUser = task.Result;//kullaniciyi degistiriyoruz
-                Debug.LogFormat("User signed in successfully: {0} ({1})",
-                    newUser.DisplayName, newUser.UserId);
+                    Firebase.Auth.FirebaseUser newUser = task.Result;//kullaniciyi degistiriyoruz
+                    Debug.LogFormat("User signed in successfully: {0} ({1})",
+                        newUser.DisplayName, newUser.UserId);
 
-            });
+                });
+            }
         }
+       
     }
+    //orjinali
+    //public void UyeGirisi()
+    //{
+
+    //    if (GirisVeriKontrol())
+    //    {
+    //        auth.SignInWithEmailAndPasswordAsync(girisEmail.text, girisSifre.text).ContinueWith(task => {//giris icin kontrol ediyo
+    //            if (task.IsCanceled)
+    //            {
+    //                Debug.Log("SignInWithEmailAndPasswordAsync was canceled.");
+    //                return;
+    //            }
+    //            if (task.IsFaulted)
+    //            {
+    //                Debug.Log("SignInWithEmailAndPasswordAsync encountered an error: " + task.Exception);
+    //                return;
+    //            }
+
+    //            Firebase.Auth.FirebaseUser newUser = task.Result;//kullaniciyi degistiriyoruz
+    //            Debug.LogFormat("User signed in successfully: {0} ({1})",
+    //                newUser.DisplayName, newUser.UserId);
+
+    //        });
+    //    }
+    //}
     bool GirisVeriKontrol()
     {
 
@@ -136,4 +188,60 @@ public class AuthManager : MonoBehaviour
         }
         return true;
     }
+
+    void BosVeriOlustur()
+    {
+        OyunData bosveri = new OyunData
+        {
+            Name = "TestName",
+            LastName = "TestLastName",
+            exp = 0,
+            level = 1,
+            Adress = "",
+            AllPayment = 0f
+
+        };
+        //jsona ceviriyoruz burada 
+        string bosJson = JsonUtility.ToJson(bosveri);
+        //database yazdiriyoruz
+        reference.Child("OyunVerileri").Child(auth.CurrentUser.UserId).SetRawJsonValueAsync(bosJson);
+    }
+
+ //  void VerileriCek()
+ //  {
+ //   //   loadingCoroutine = StartCoroutine(Loading()); //yuklenirken kullanici bir seylerle ugrasmasin
+ //
+ //      //Child bi alt basliga inmek olarak dusunelim
+ //      //ve childine kullanicimizin idsini veriyoruz(ona ozel olan) 
+ //      reference.Child("OyunVerileri").Child(auth.CurrentUser.UserId).GetValueAsync().ContinueWithOnMainThread(task => {
+ //          if (task.IsFaulted)
+ //          {
+ //              Debug.Log("Database Hata");
+ //          }
+ //          else if (task.IsCompleted)
+ //          {
+ //              DataSnapshot snapshot = task.Result;
+ //              if (snapshot.GetRawJsonValue() == null)//bu bos ise henuz veri kaydi olusturmamisiz demek
+ //              {
+ //                  Debug.Log("Boþ");
+ //                  BosVeriOlustur();//baslangic verisi olusturuyoruz
+ //                  VerileriCek();
+ //              }
+ //              else
+ //              {
+ //                  //varsa direk cekiyoruz
+ //                  Debug.Log(snapshot.GetRawJsonValue());
+ //                  //jsondan objeye - objeden jsona cevirme
+ //                  OyunData data = JsonUtility.FromJson<OyunData>(snapshot.GetRawJsonValue());
+ //                  NameText.text = "Adý:" + data.Name;
+ //                  LastNameText.text = "LastName:" + data.LastName;
+ //                  expText.text = "Exp:" + data.exp;
+ //                  levelText.text = "Level:" + data.level;
+ //
+ //
+ //                  loaded = true;
+ //              }
+ //          }
+ //      });
+ //  }
 }
