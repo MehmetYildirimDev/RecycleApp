@@ -83,7 +83,7 @@ public class AuthManager : MonoBehaviour
                     newUser.DisplayName, newUser.UserId);
 
                 //burada yapmaliyim islemleri
-                OyunData oyunData = new OyunData();
+                PersonelData oyunData = new PersonelData();
                 oyunData.Name = uyeOlName.text;
                 oyunData.LastName = uyeOlLastName.text;
                 oyunData.Adress = uyeOlAdress.text;
@@ -189,59 +189,5 @@ public class AuthManager : MonoBehaviour
         return true;
     }
 
-    void BosVeriOlustur()
-    {
-        OyunData bosveri = new OyunData
-        {
-            Name = "TestName",
-            LastName = "TestLastName",
-            exp = 0,
-            level = 1,
-            Adress = "",
-            AllPayment = 0f
-
-        };
-        //jsona ceviriyoruz burada 
-        string bosJson = JsonUtility.ToJson(bosveri);
-        //database yazdiriyoruz
-        reference.Child("OyunVerileri").Child(auth.CurrentUser.UserId).SetRawJsonValueAsync(bosJson);
-    }
-
- //  void VerileriCek()
- //  {
- //   //   loadingCoroutine = StartCoroutine(Loading()); //yuklenirken kullanici bir seylerle ugrasmasin
- //
- //      //Child bi alt basliga inmek olarak dusunelim
- //      //ve childine kullanicimizin idsini veriyoruz(ona ozel olan) 
- //      reference.Child("OyunVerileri").Child(auth.CurrentUser.UserId).GetValueAsync().ContinueWithOnMainThread(task => {
- //          if (task.IsFaulted)
- //          {
- //              Debug.Log("Database Hata");
- //          }
- //          else if (task.IsCompleted)
- //          {
- //              DataSnapshot snapshot = task.Result;
- //              if (snapshot.GetRawJsonValue() == null)//bu bos ise henuz veri kaydi olusturmamisiz demek
- //              {
- //                  Debug.Log("Boþ");
- //                  BosVeriOlustur();//baslangic verisi olusturuyoruz
- //                  VerileriCek();
- //              }
- //              else
- //              {
- //                  //varsa direk cekiyoruz
- //                  Debug.Log(snapshot.GetRawJsonValue());
- //                  //jsondan objeye - objeden jsona cevirme
- //                  OyunData data = JsonUtility.FromJson<OyunData>(snapshot.GetRawJsonValue());
- //                  NameText.text = "Adý:" + data.Name;
- //                  LastNameText.text = "LastName:" + data.LastName;
- //                  expText.text = "Exp:" + data.exp;
- //                  levelText.text = "Level:" + data.level;
- //
- //
- //                  loaded = true;
- //              }
- //          }
- //      });
- //  }
+ 
 }
