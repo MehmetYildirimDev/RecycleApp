@@ -12,46 +12,80 @@ public class DropDownScript : MonoBehaviour
     public Text textBox;
     public TMP_Dropdown dropdown;
 
+
     DatabaseReference reference;
 
-
     public List<string> items;
-    public List<string> keyList;
+
+    [SerializeField] TMP_Text Ucret;
+
+
     private void Start()
     {
         reference = FirebaseDatabase.DefaultInstance.RootReference;
- 
 
-        
         dropdown.options.Clear();
 
 
-        //Burayi moduler yapmak gerek
-        
-        items.Add("CamSise");
-        items.Add("PetSise");
-        items.Add("CamBardak");
-        items.Add("SuSisesi");
 
-        foreach (var item in items)
-        {
-            dropdown.options.Add(new TMP_Dropdown.OptionData() { text = item });
-        }
+        //Burayi moduler yapmak gerek
+
+          items.Add("CamSise");
+          items.Add("PetSise");
+          items.Add("CamBardak");
+          items.Add("SuSisesi");
+
+          foreach (var item in items)
+          {
+              dropdown.options.Add(new TMP_Dropdown.OptionData() { text = item });
+          }
+
+        //  dropdown.AddOptions();//direk liste ekleme
 
         DropDownItemSelected(dropdown);
+
         dropdown.onValueChanged.AddListener(delegate { DropDownItemSelected(dropdown); });
 
         VerileriAl();
-        Doldur();
-        
-        
+
+
+        DBdenkeyleriGetir();
     }
 
+    private void DBdenkeyleriGetir()
+    {
+        reference.Child("/Items/").GetValueAsync().ContinueWithOnMainThread(task =>
+        {
+            if (task.IsFaulted)
+            {
+                Debug.Log("db hata");
+            }
+            else if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+            //    Debug.Log(snapshot.GetRawJsonValue());
+                if (snapshot.GetRawJsonValue() == null)
+                {
+                    Debug.Log("bos");
+                    return; 
+                }
+                else
+                {
+                    Debug.Log("basarili");
+
+
+                }
+            }
+
+
+        });
+    }
+    /*
+     
     private void Doldur()
     {
-        foreach (string item in items)
-        {
-            reference.Child("Items").Child(item).GetValueAsync().ContinueWithOnMainThread(task =>
+           
+            reference.Child("/Items/").GetValueAsync().ContinueWithOnMainThread(task =>
             {
                 if (task.IsFaulted)
                 {
@@ -60,7 +94,7 @@ public class DropDownScript : MonoBehaviour
                 else if (task.IsCompleted)
                 {
                     DataSnapshot snapshot = task.Result;
-                   // Debug.Log(snapshot.GetRawJsonValue());
+                    // Debug.Log(snapshot.GetRawJsonValue());
                     if (snapshot.GetRawJsonValue() == null)
                     {
                         Debug.Log("bos hatasi");
@@ -68,17 +102,19 @@ public class DropDownScript : MonoBehaviour
                     }
                     else
                     {//burada cozulecek her sey
-                        
-                       // Debug.Log("snapshot.Key: " + snapshot.Key + " BURADAYIZ ");
-                        ItemData data1 = JsonUtility.FromJson<ItemData>(snapshot.GetRawJsonValue());
-                        Debug.Log("name, ucret: " + data1.Name + data1.ucreti);
-                        
-                        
+                        Debug.Log(snapshot.GetRawJsonValue());
+                        // Debug.Log("snapshot.Key: " + snapshot.Key + " BURADAYIZ ");
+                        KeyData data = JsonUtility.FromJson<KeyData>(snapshot.GetRawJsonValue());
+                        //Debug.Log("name, ucret: " + data1.Name + " " + data1.ucreti);
+                        //alt satir calismiyor
+                        Debug.Log(data.keys);
+                        //keyList.Add(data.Name);
+
                     }
                 }
 
             });
-        }
+        
 
         //reference.Child("Items").GetValueAsync().ContinueWithOnMainThread(task =>
         //{
@@ -105,8 +141,11 @@ public class DropDownScript : MonoBehaviour
 
         //});
     }
-
-
+    */
+    private void Update()
+    {
+        
+    }
     void DropDownItemSelected(TMP_Dropdown dropdown)
     {
         int index = dropdown.value;
@@ -119,7 +158,7 @@ public class DropDownScript : MonoBehaviour
     private void VerileriAl()
     {
 
-        reference.Child("Items").Child(textBox.text).GetValueAsync().ContinueWithOnMainThread(task =>
+        reference.Child("/Items").Child(textBox.text).GetValueAsync().ContinueWithOnMainThread(task =>
         {
             if (task.IsFaulted)
             {
@@ -128,7 +167,7 @@ public class DropDownScript : MonoBehaviour
             else if (task.IsCompleted)
             {
                 DataSnapshot snapshot = task.Result;
-               // Debug.Log(snapshot.Key);//bunun ciktisi cam sisi(vs) yani basligi
+                // Debug.Log(snapshot.Key);//bunun ciktisi cam sisi(vs) yani basligi
                 //Debug.Log(snapshot.GetRawJsonValue());
                 if (snapshot.GetRawJsonValue() == null)//bu bos ise henuz veri kaydi olusturmamisiz demek
                 {
@@ -139,10 +178,12 @@ public class DropDownScript : MonoBehaviour
                 else
                 {
                     //varsa direk cekiyoruz
-                   // Debug.Log(snapshot.GetRawJsonValue());
+              //      Debug.Log(snapshot.GetRawJsonValue());
                     //jsondan objeye - objeden jsona cevirme
                     ItemData data = JsonUtility.FromJson<ItemData>(snapshot.GetRawJsonValue());
-                   // Debug.Log(data.ucreti);
+              //       Debug.Log(data.ucreti);
+                    Ucret.text = data.ucreti.ToString() + " Carbon";
+                    
                 }
             }
         });

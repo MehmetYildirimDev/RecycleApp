@@ -43,8 +43,8 @@ public class AuthManager : MonoBehaviour
         //buraa bir daha yapiyoruz
         if (auth.CurrentUser != null)
         {
-            //  SceneManager.LoadScene("MainScene");
-            auth.SignOut();
+             SceneManager.LoadScene("MainScene");
+            //auth.SignOut();
         }
     }
 
@@ -70,13 +70,13 @@ public class AuthManager : MonoBehaviour
                 }
                 if (task.IsFaulted)
                 {
-                    Debug.Log("CreateUserWithEmailAndPasswordAsync encountered an error: " + task.Exception);
+                   // Debug.Log("CreateUserWithEmailAndPasswordAsync encountered an error: " + task.Exception);
                     return;
                 }
 
                 Firebase.Auth.FirebaseUser newUser = task.Result;
-                Debug.LogFormat("Firebase user created successfully: {0} ({1})",
-                    newUser.DisplayName, newUser.UserId);
+            //    Debug.LogFormat("Firebase user created successfully: {0} ({1})",
+            //        newUser.DisplayName, newUser.UserId);
 
                 //burada yapmaliyim islemleri
                 PersonelData oyunData = new PersonelData();

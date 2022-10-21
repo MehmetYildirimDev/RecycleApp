@@ -119,7 +119,7 @@ public class GameSceneManager : MonoBehaviour
                 else
                 {
                     //varsa direk cekiyoruz
-                    Debug.Log(snapshot.GetRawJsonValue());
+                //    Debug.Log(snapshot.GetRawJsonValue());
                     //jsondan objeye - objeden jsona cevirme
                     PersonelData data = JsonUtility.FromJson<PersonelData>(snapshot.GetRawJsonValue());
                     NameText.text = "Adý: " + data.Name;
@@ -134,6 +134,8 @@ public class GameSceneManager : MonoBehaviour
                 }
             }
         });
+
+
     }
 
     void BosVeriOlustur()

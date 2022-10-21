@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 662be004548d88246a87b846149dc76d
+  - enabled: 1
+    path: Assets/Scenes/DataLoadSave.unity
+    guid: 237b280dbfa531746ae5f51bc4931d18
+  - enabled: 1
+    path: Assets/Scenes/TestScene.unity
+    guid: 63e1a91801ca99c44aa897795708a55e
   m_configObjects: {}

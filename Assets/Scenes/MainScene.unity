@@ -3608,6 +3608,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textBox: {fileID: 166360995}
   dropdown: {fileID: 1592366512}
+  items: []
+  Ucret: {fileID: 1892797378}
 --- !u!4 &1579738561
 Transform:
   m_ObjectHideFlags: 0
