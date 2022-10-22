@@ -51,7 +51,13 @@ public class DropDownScript : MonoBehaviour
 
         DBdenkeyleriGetir();
     }
+    void DropDownItemSelected(TMP_Dropdown dropdown)
+    {
+        int index = dropdown.value;
 
+        textBox.text = dropdown.options[index].text;
+        VerileriAl();
+    }
     private void DBdenkeyleriGetir()
     {
         reference.Child("/Items/").GetValueAsync().ContinueWithOnMainThread(task =>
@@ -146,13 +152,7 @@ public class DropDownScript : MonoBehaviour
     {
         
     }
-    void DropDownItemSelected(TMP_Dropdown dropdown)
-    {
-        int index = dropdown.value;
 
-        textBox.text = dropdown.options[index].text;
-        VerileriAl();
-    }
 
 
     private void VerileriAl()

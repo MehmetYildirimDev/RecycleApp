@@ -44,8 +44,11 @@ public class FirebaseManager : MonoBehaviour
     public TMP_Text usernameTextRYC;
     public TMP_Text addressTextRYC;
     public TMP_Text itemTextRYC;
+    public TMP_Text ucretTextRYC;
+    public TMP_Dropdown dropdownRYC;
 
-    public List<string> ItemList = new List<string>();
+    public List<string> ItemNameList = new List<string>();
+    public List<string> ItemucretList = new List<string>();
 
     void Awake()
     {
@@ -67,7 +70,16 @@ public class FirebaseManager : MonoBehaviour
 
     private void Start()
     {
+        dropdownRYC.onValueChanged.AddListener(delegate { DropDownItemSelected(dropdownRYC); });
+    }
 
+    void DropDownItemSelected(TMP_Dropdown dropdown)
+    {
+        int index = dropdown.value;
+
+        //textBox.text = dropdown.options[index].text;
+
+        ucretTextRYC.text = ItemucretList[index];
     }
     private void InitializeFirebase()
     {
@@ -179,8 +191,6 @@ public class FirebaseManager : MonoBehaviour
             ClearLoginFeilds();
             ClearRegisterFeilds();
         }
-
-        Debug.Log(DBreference.Child("users").Child(User.UserId).GetValueAsync());
     }
 
     private IEnumerator Register(string _email, string _password, string _username, string _address)
@@ -398,7 +408,7 @@ public class FirebaseManager : MonoBehaviour
             addressTextRYC.text = snapshot.Child("address").Value.ToString();
         }
 
-        StartCoroutine(itemGet());
+        StartCoroutine(itemGet());//dropdown degeri
     }
 
     private IEnumerator itemGet()
@@ -417,20 +427,23 @@ public class FirebaseManager : MonoBehaviour
             //No data exists yet
         }
         else
-        {
-            ItemData itemData = new ItemData();
+        {       
             //Data has been retrieved
             DataSnapshot snapshot = DBTask.Result;
             //AddressField.text = snapshot.Child("address").Value.ToString();
 
             foreach (DataSnapshot childSnapshot in snapshot.Children.Reverse<DataSnapshot>())
             {
-                itemData.Name = childSnapshot.GetRawJsonValue();
-                ItemList.Add(childSnapshot.Child("Name").Value.ToString());         
+                ItemNameList.Add(childSnapshot.Child("Name").Value.ToString());         
+                ItemucretList.Add(childSnapshot.Child("ucreti").Value.ToString());         
             }
-            Debug.Log(ItemList.Count);
-            Debug.Log("itemData.Name: " + itemData.Name);
-            itemTextRYC.text = ItemList[0];
+
+
+            Debug.Log(ItemNameList.Count);
+            itemTextRYC.text = ItemNameList[0];
+            ucretTextRYC.text = ItemucretList[0];
+            dropdownRYC.ClearOptions();
+            dropdownRYC.AddOptions(ItemNameList);
         }
     }
 
