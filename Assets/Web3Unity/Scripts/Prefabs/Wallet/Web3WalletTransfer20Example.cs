@@ -8,9 +8,9 @@ public class Web3WalletTransfer20Example : MonoBehaviour
  async public void OnTransfer20()
     {
         // https://chainlist.org/
-        string chainId = "4"; // rinkeby
+        string chainId = "56"; // rinkeby
         // contract to interact with 
-        string contract = "0xc778417e063141139fce010982780140aa0cd5ab";
+        string contract = "0x5625188439b1E0AD7B7D1d08a3c470D04b41B5DF";
         // value in wei
         string value = "0";
         // abi in json format
@@ -18,9 +18,9 @@ public class Web3WalletTransfer20Example : MonoBehaviour
         // smart contract method to call
         string method = "transfer";
         // account to send erc20 to
-        string toAccount = "0xdD4c825203f97984e7867F11eeCc813A036089D1";
+        string toAccount = "0x2F97B0106B27E07ad623014cA1449e40d4a1D970";
         // amount of erc20 tokens to send
-        string amount = "1000000000000000";
+        string amount = "1000000000000000000";
         // array of arguments for contract
         string[] obj = {toAccount, amount};
         string args = JsonConvert.SerializeObject(obj);

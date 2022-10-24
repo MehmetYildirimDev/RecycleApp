@@ -41,9 +41,10 @@ public class WalletLogin: MonoBehaviour
                 PlayerPrefs.SetInt("RememberMe", 1);
             else
                 PlayerPrefs.SetInt("RememberMe", 0);
-            print("Account: " + account);
+            print("Account: " + account);//account hesap adresi oluyo
+
             // load next scene
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 }
