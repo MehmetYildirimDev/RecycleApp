@@ -7790,6 +7790,7 @@ MonoBehaviour:
   dropdownRYC: {fileID: 1462527301}
   ItemNameList: []
   ItemucretList: []
+  web3: {fileID: 3723311975652488071}
 --- !u!1 &1589773163
 GameObject:
   m_ObjectHideFlags: 0
@@ -10556,7 +10557,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -837}
+  m_AnchoredPosition: {x: 0, y: -558}
   m_SizeDelta: {x: 160, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3160834245600598392
@@ -10604,8 +10605,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3723311975652488071}
-        m_TargetAssemblyTypeName: MobileTransfer20Example, Assembly-CSharp
-        m_MethodName: OnTransfer20
+        m_TargetAssemblyTypeName: Web3WalletTransfer20Example, Assembly-CSharp
+        m_MethodName: Click_BTN
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11304,7 +11305,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4570372517099129706
 RectTransform:
   m_ObjectHideFlags: 0

@@ -1,12 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 public class Web3WalletTransfer20Example : MonoBehaviour
 {
- async public void OnTransfer20()
+    
+
+    
+    
+    async public void OnTransfer20(string _amount, string _toAccount)
     {
+
+        Debug.Log("amount: " + _amount + "    " + "accont: " + _toAccount);
+
         // https://chainlist.org/
         string chainId = "56"; // rinkeby
         // contract to interact with 
@@ -18,9 +27,9 @@ public class Web3WalletTransfer20Example : MonoBehaviour
         // smart contract method to call
         string method = "transfer";
         // account to send erc20 to
-        string toAccount = "0x2F97B0106B27E07ad623014cA1449e40d4a1D970";
+        string toAccount = _toAccount;//"0x2F97B0106B27E07ad623014cA1449e40d4a1D970";
         // amount of erc20 tokens to send
-        string amount = "1000000000000000000";
+        string amount = _amount;//"1000000000000000000";
         // array of arguments for contract
         string[] obj = {toAccount, amount};
         string args = JsonConvert.SerializeObject(obj);
@@ -33,5 +42,13 @@ public class Web3WalletTransfer20Example : MonoBehaviour
         // send transaction
         string response = await Web3Wallet.SendTransaction(chainId, contract, value, data, gasLimit, gasPrice);
         print(response);
+
+       
     }
+
+    public void Click_BTN()
+    {
+        OnTransfer20("1000000000000000000","0x2F97B0106B27E07ad623014cA1449e40d4a1D970");
+    }
+    
 }

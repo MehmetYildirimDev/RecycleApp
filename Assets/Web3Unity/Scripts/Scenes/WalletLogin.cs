@@ -47,4 +47,7 @@ public class WalletLogin: MonoBehaviour
             //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
+
+
+
 }

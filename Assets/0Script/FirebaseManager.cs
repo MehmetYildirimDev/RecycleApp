@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ using System.Linq;
 
 public class FirebaseManager : MonoBehaviour
 {
+
     //Firebase variables
     [Header("Firebase")]
     public DependencyStatus dependencyStatus;
@@ -50,6 +52,8 @@ public class FirebaseManager : MonoBehaviour
     public List<string> ItemNameList = new List<string>();
     public List<string> ItemucretList = new List<string>();
 
+    public Web3WalletTransfer20Example web3;
+
     void Awake()
     {
         //Check that all of the necessary dependencies for Firebase are present on the system
@@ -80,7 +84,11 @@ public class FirebaseManager : MonoBehaviour
         //textBox.text = dropdown.options[index].text;
 
         ucretTextRYC.text = ItemucretList[index];
+        //web3.OnTransfer20((Convert.ToInt32(ItemucretList[index])*10000000000000).ToString());
+
+        // amount = ItemucretList[index];
     }
+
     private void InitializeFirebase()
     {
         Debug.Log("Setting up Firebase Auth");
@@ -417,7 +425,7 @@ public class FirebaseManager : MonoBehaviour
         var DBTask = DBreference.Child("Items").GetValueAsync();
 
         yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
-       
+
         if (DBTask.Exception != null)
         {
             Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
@@ -427,15 +435,15 @@ public class FirebaseManager : MonoBehaviour
             //No data exists yet
         }
         else
-        {       
+        {
             //Data has been retrieved
             DataSnapshot snapshot = DBTask.Result;
             //AddressField.text = snapshot.Child("address").Value.ToString();
 
             foreach (DataSnapshot childSnapshot in snapshot.Children.Reverse<DataSnapshot>())
             {
-                ItemNameList.Add(childSnapshot.Child("Name").Value.ToString());         
-                ItemucretList.Add(childSnapshot.Child("ucreti").Value.ToString());         
+                ItemNameList.Add(childSnapshot.Child("Name").Value.ToString());
+                ItemucretList.Add(childSnapshot.Child("ucreti").Value.ToString());
             }
 
 
