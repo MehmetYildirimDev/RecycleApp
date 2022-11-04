@@ -10556,8 +10556,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3723311975652488071}
-        m_TargetAssemblyTypeName: Web3WalletTransfer20Example, Assembly-CSharp
+      - m_Target: {fileID: 1551468299}
+        m_TargetAssemblyTypeName: FirebaseManager, Assembly-CSharp
         m_MethodName: Click_BTN
         m_Mode: 1
         m_Arguments:
@@ -11257,7 +11257,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4570372517099129706
 RectTransform:
   m_ObjectHideFlags: 0

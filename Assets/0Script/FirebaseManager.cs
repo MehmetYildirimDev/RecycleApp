@@ -52,7 +52,7 @@ public class FirebaseManager : MonoBehaviour
     public List<string> ItemNameList = new List<string>();
     public List<string> ItemucretList = new List<string>();
 
-    public Web3WalletTransfer20Example web3;
+    [SerializeField] private Web3WalletTransfer20Example web3;
 
     void Awake()
     {
@@ -84,10 +84,28 @@ public class FirebaseManager : MonoBehaviour
         //textBox.text = dropdown.options[index].text;
 
         ucretTextRYC.text = ItemucretList[index];
-        //web3.OnTransfer20((Convert.ToInt32(ItemucretList[index])*10000000000000).ToString());
 
+
+        //web3.OnTransfer20((Convert.ToInt32(ItemucretList[index])*10000000000000).ToString());
         // amount = ItemucretList[index];
     }
+
+    public void TRANSFER_Click_BTN()
+    {
+        double amount = Convert.ToDouble(ItemucretList[dropdownRYC.value]) * 1000000000;
+
+        if (PlayerPrefs.GetString("Account") != "")
+        {
+           web3.OnTransfer20(amount.ToString(), PlayerPrefs.GetString("Account"));
+        }
+        else
+        {
+            Debug.Log("hesaba giris yap");
+        }
+
+
+    }
+
 
     private void InitializeFirebase()
     {

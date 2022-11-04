@@ -46,9 +46,23 @@ public class Web3WalletTransfer20Example : MonoBehaviour
        
     }
 
-    public void Click_BTN()
+    public void Click_BTN(string amount)
     {
-        OnTransfer20("1000000000000000000","0x2F97B0106B27E07ad623014cA1449e40d4a1D970");
+        if (PlayerPrefs.GetString("Account") != "")
+        {
+            OnTransfer20(amount, PlayerPrefs.GetString("Account"));
+        }
+        else
+        {
+            Debug.Log("hesaba giris yap");
+        }
+        
+        
     }
-    
+
+    public void Hello()
+    {
+        Debug.Log("Hello");
+    }
+
 }
