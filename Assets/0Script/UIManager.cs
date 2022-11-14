@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class UIManager : MonoBehaviour
@@ -13,6 +14,8 @@ public class UIManager : MonoBehaviour
     public GameObject userDataUI;
     public GameObject RecycleUI;
 
+    public Button transferButton;
+    public Button logimMMButton;
 
     private void Awake()
     {
@@ -27,6 +30,27 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+
+    }
+    public void isTransferable()
+    {
+        if (PlayerPrefs.GetString("Account") == "")
+        {
+            transferButton.interactable = false;
+            logimMMButton.interactable = true;
+        }
+
+        else
+        {
+            logimMMButton.interactable = false;
+            transferButton.interactable = true;
+        }
+
+    }
+
+    
     //Functions to change the login screen UI
 
     public void ClearScreen() //Turn off all screens
@@ -51,6 +75,7 @@ public class UIManager : MonoBehaviour
 
     public void RecycleScreen()
     {
+        isTransferable();
         ClearScreen();
         RecycleUI.SetActive(true);
     }

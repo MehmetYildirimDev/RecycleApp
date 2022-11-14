@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class WalletLogin: MonoBehaviour
 {
     public Toggle rememberMe;
+    public UIManager uiManager;
 
     void Start() {
         // if remember me is checked, set the account to the saved account
@@ -43,6 +44,7 @@ public class WalletLogin: MonoBehaviour
                 PlayerPrefs.SetInt("RememberMe", 0);
             print("Account: " + account);//account hesap adresi oluyo
 
+            uiManager.isTransferable();
             // load next scene
             //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
