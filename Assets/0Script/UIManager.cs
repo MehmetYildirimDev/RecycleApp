@@ -78,6 +78,7 @@ public class UIManager : MonoBehaviour
         isTransferable();
         ClearScreen();
         RecycleUI.SetActive(true);
+        isTransferable();
     }
     public void UserDataScreen() //Logged in
     {

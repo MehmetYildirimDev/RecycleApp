@@ -42,7 +42,7 @@ public class FirebaseManager : MonoBehaviour
     public TMP_InputField usernameField;
     public TMP_InputField AddressField;
 
-    [Header("RecycleData")]
+    [Header("RecycleItemData")]
     public TMP_Text usernameTextRYC;
     public TMP_Text addressTextRYC;
     public TMP_Text itemTextRYC;
@@ -100,7 +100,7 @@ public class FirebaseManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("hesaba giris yap");
+            Debug.Log("Adres bulunamadi");
         }
 
 
