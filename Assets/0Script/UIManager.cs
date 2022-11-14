@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-
+        isTransferable();
     }
     public void isTransferable()
     {

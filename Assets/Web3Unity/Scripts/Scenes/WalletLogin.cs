@@ -10,8 +10,11 @@ public class WalletLogin: MonoBehaviour
     public UIManager uiManager;
 
     void Start() {
+
+        PlayerPrefs.SetString("Account", "");
+
         // if remember me is checked, set the account to the saved account
-        if(PlayerPrefs.HasKey("RememberMe") && PlayerPrefs.HasKey("Account"))
+        if (PlayerPrefs.HasKey("RememberMe") && PlayerPrefs.HasKey("Account"))
         {
             if (PlayerPrefs.GetInt("RememberMe") == 1 && PlayerPrefs.GetString("Account") != "")
             {
