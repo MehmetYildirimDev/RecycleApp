@@ -75,9 +75,22 @@ public class FirebaseManager : MonoBehaviour
             }
         });
     }
-   /// <summary>
-   /// dropdown'a addListener ekleniyor
-   /// </summary>
+
+    /// <summary>
+    /// Firebase baslatma fonksiyonu
+    /// </summary>
+    private void InitializeFirebase()
+    {
+        Debug.Log("Setting up Firebase Auth");
+        //Set the authentication instance object
+        Auth = FirebaseAuth.DefaultInstance;
+        DBreference = FirebaseDatabase.DefaultInstance.RootReference;
+    }
+
+
+    /// <summary>
+    /// dropdown'a addListener ekleniyor
+    /// </summary>
     private void Start()
     {
         dropdownRYC.onValueChanged.AddListener(delegate { DropDownItemSelected(dropdownRYC); });
@@ -101,6 +114,9 @@ public class FirebaseManager : MonoBehaviour
         // amount = ItemucretList[index];
     }
 
+    /// <summary>
+    /// transfer islemini gerceklestirir. Buton ile aktif olur
+    /// </summary>
     public void TRANSFER_Click_BTN()
     {
         double amount = Convert.ToDouble(ItemucretList[dropdownRYC.value]) * 1000000000;
@@ -117,14 +133,10 @@ public class FirebaseManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Clear fonksiyonlari inputfieldsleri temizler
+    /// </summary>
 
-    private void InitializeFirebase()
-    {
-        Debug.Log("Setting up Firebase Auth");
-        //Set the authentication instance object
-        Auth = FirebaseAuth.DefaultInstance;
-        DBreference = FirebaseDatabase.DefaultInstance.RootReference;
-    }
     public void ClearLoginFeilds()
     {
         emailLoginField.text = "";
@@ -138,7 +150,7 @@ public class FirebaseManager : MonoBehaviour
         passwordRegisterVerifyField.text = "";
     }
 
-    //Function for the login button
+
     public void LoginButton()
     {
         //Call the login coroutine passing the email and password
@@ -178,11 +190,9 @@ public class FirebaseManager : MonoBehaviour
 
 
     /// <summary>
-    /// 
+    /// Giris islemi yapiliyor
     /// </summary>
-    /// <param name="_email"></param>
-    /// <param name="_password"></param>
-    /// <returns></returns>
+    /// <returns> main sahne aciliyor ve inputfields temizleniyor </returns>
     private IEnumerator Login(string _email, string _password)
     {
         //Call the Firebase auth signin function passing the email and password
@@ -227,17 +237,23 @@ public class FirebaseManager : MonoBehaviour
             warningLoginText.text = "";
             confirmLoginText.text = "Logged In";
 
-            StartCoroutine(RecycleLoadData());              //StartCoroutine(LoadUserData());
+            StartCoroutine(RecycleLoadData());
+
             yield return new WaitForSeconds(2);
 
-            //usernameField.text = User.DisplayName;
-            UIManager.instance.RecycleScreen();             //UIManager.instance.UserDataScreen(); // Change to user data UI
+            UIManager.instance.RecycleScreen();
+
             confirmLoginText.text = "";
+
             ClearLoginFeilds();
             ClearRegisterFeilds();
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator Register(string _email, string _password, string _username, string _address)
     {
         if (_username == "")
@@ -249,6 +265,10 @@ public class FirebaseManager : MonoBehaviour
         {
             //If the password does not match show a warning
             warningRegisterText.text = "Password Does Not Match!";
+        }
+        else if (_address.Length >= 26 && _address.Length <= 35)
+        {
+            warningRegisterText.text = "Adres bilgisi dogru degil";
         }
         else
         {
@@ -316,29 +336,30 @@ public class FirebaseManager : MonoBehaviour
                     }
 
                     //adress
-                    var DBTask = DBreference.Child("users").Child(User.UserId).Child("address").SetValueAsync(_address);
+                    var adressTask = DBreference.Child("users").Child(User.UserId).Child("address").SetValueAsync(_address);
 
-                    yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+                    yield return new WaitUntil(predicate: () => adressTask.IsCompleted);
 
-                    if (DBTask.Exception != null)
+                    if (adressTask.Exception != null)
                     {
-                        Debug.LogWarning(message: $"Failed to register task with {DBTask.Exception}");
+                     Debug.LogWarning(message: $"Failed to register task with {adressTask.Exception}");
                     }
                     else
                     {
-                        //Xp is now updated
+                     //Database adress is now updated
                     }
+                    
 
 
                     //username
                     //Set the currently logged in user username in the database
-                    var DBTask1 = DBreference.Child("users").Child(User.UserId).Child("username").SetValueAsync(_username);
+                    var usernameTask = DBreference.Child("users").Child(User.UserId).Child("username").SetValueAsync(_username);
 
-                    yield return new WaitUntil(predicate: () => DBTask1.IsCompleted);
+                    yield return new WaitUntil(predicate: () => usernameTask.IsCompleted);
 
-                    if (DBTask.Exception != null)
+                    if (usernameTask.Exception != null)
                     {
-                        Debug.LogWarning(message: $"Failed to register task with {DBTask1.Exception}");
+                        Debug.LogWarning(message: $"Failed to register task with {usernameTask.Exception}");
                     }
                     else
                     {
