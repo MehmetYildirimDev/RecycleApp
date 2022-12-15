@@ -8,19 +8,20 @@ public class Web3PrivateKeySend20Example : MonoBehaviour
     async public void OnSend20()
     {
         // private key of account
-        string privateKey = "0x78dae1a22c7507a4ed30c06172e7614eb168d3546c13856340771e63ad3c0081";
+        string privateKey = "e91af25f3fcb7f7d37c5b1c0e38fbe4b9cfc2a6a9e75c004eff5edd63494d005";
         // set chain: ethereum, moonbeam, polygon etc
-        string chain = "ethereum";
+        string chain = "binance"; // string chain = "ethereum";
+        
         // set network mainnet, testnet
-        string network = "rinkeby";
+        string network = "mainnet";
         // smart contract method to call
         string method = "transfer";
         // account of player 
-        string account = Web3PrivateKey.Address(privateKey);
+        string account = "0xd8707811Cd9E9F4dF8fDa3769BB00f0EEe2817FD";    //string account = Web3PrivateKey.Address(privateKey);
         // smart contract address: https://rinkeby.etherscan.io/address/0xc7ad46e0b8a400bb3c915120d284aafba8fc4735
-        string contract = "0xc7ad46e0b8a400bb3c915120d284aafba8fc4735";
+        string contract = "0x5625188439b1E0AD7B7D1d08a3c470D04b41B5DF";
         // account to send to
-        string toAccount = "0x428066dd8A212104Bc9240dCe3cdeA3D3A0f7979";
+        string toAccount = "0x2F97B0106B27E07ad623014cA1449e40d4a1D970";
         // amount of erc20 tokens to send. usually 18 decimals
         string amount = "1000000000000000000";
         // amount of wei to send

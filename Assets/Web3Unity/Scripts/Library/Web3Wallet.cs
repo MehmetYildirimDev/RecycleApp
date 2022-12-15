@@ -34,6 +34,8 @@ public class Web3Wallet
         }
         else
         {
+
+            Debug.Log("transfer gerçeklsmedi");
             throw new Exception("transaction error");
         }
     }

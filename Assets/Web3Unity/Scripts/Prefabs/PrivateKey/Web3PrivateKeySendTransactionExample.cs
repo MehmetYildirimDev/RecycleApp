@@ -12,7 +12,7 @@ public class Web3PrivateKeySendTransactionExample : MonoBehaviour
         // set chain: ethereum, moonbeam, polygon etc
         string chain = "ethereum";
         // set network mainnet, testnet
-        string network = "rinkeby";
+        string network = "mainnet";
         // account of player        
         string account = Web3PrivateKey.Address(privateKey);
         // account to send to

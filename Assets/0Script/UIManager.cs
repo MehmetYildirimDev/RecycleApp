@@ -14,7 +14,6 @@ public class UIManager : MonoBehaviour
     public GameObject userDataUI;
     public GameObject RecycleUI;
 
-    public Button transferButton;
     public Button logimMMButton;
 
     private void Awake()
@@ -32,21 +31,21 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        isTransferable();
+       
     }
     public void isTransferable()
     {
-        if (PlayerPrefs.GetString("Account") == "")
-        {
-            transferButton.interactable = false;
-            logimMMButton.interactable = true;
-        }
+        //if (PlayerPrefs.GetString("Account") == "")
+        //{
+        //    transferButton.interactable = false;
+        //    logimMMButton.interactable = true;
+        //}
 
-        else
-        {
-            logimMMButton.interactable = false;
-            transferButton.interactable = true;
-        }
+        //else
+        //{
+        //    logimMMButton.interactable = false;
+        //    transferButton.interactable = true;
+        //}
 
     }
 
@@ -78,7 +77,6 @@ public class UIManager : MonoBehaviour
         isTransferable();
         ClearScreen();
         RecycleUI.SetActive(true);
-        isTransferable();
     }
     public void UserDataScreen() //Logged in
     {

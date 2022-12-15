@@ -54,10 +54,14 @@ public class FirebaseManager : MonoBehaviour
 
     [SerializeField] private Web3WalletTransfer20Example web3;
 
+
+    /// <summary>
+    /// Firabase'e baglaniyor
+    /// </summary>
     void Awake()
     {
         //Check that all of the necessary dependencies for Firebase are present on the system
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
+      FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
         {
             dependencyStatus = task.Result;
             if (dependencyStatus == DependencyStatus.Available)
@@ -71,12 +75,18 @@ public class FirebaseManager : MonoBehaviour
             }
         });
     }
-
+   /// <summary>
+   /// dropdown'a addListener ekleniyor
+   /// </summary>
     private void Start()
     {
         dropdownRYC.onValueChanged.AddListener(delegate { DropDownItemSelected(dropdownRYC); });
     }
 
+    /// <summary>
+    /// Degisen dropdown degeri ile Listelerin verisini guncelliyoruz
+    /// </summary>
+    /// <param name="dropdown">Degere ulasabilmemiz icin gerekli</param>
     void DropDownItemSelected(TMP_Dropdown dropdown)
     {
         int index = dropdown.value;
@@ -84,6 +94,7 @@ public class FirebaseManager : MonoBehaviour
         //textBox.text = dropdown.options[index].text;
 
         ucretTextRYC.text = ItemucretList[index];
+        itemTextRYC.text = ItemNameList[index];
 
 
         //web3.OnTransfer20((Convert.ToInt32(ItemucretList[index])*10000000000000).ToString());
@@ -96,7 +107,7 @@ public class FirebaseManager : MonoBehaviour
 
         if (PlayerPrefs.GetString("Account") != "")
         {
-           web3.OnTransfer20(amount.ToString(), PlayerPrefs.GetString("Account"));
+           web3.OnTransfer20(amount.ToString(), addressTextRYC.text);
         }
         else
         {
@@ -164,6 +175,14 @@ public class FirebaseManager : MonoBehaviour
     //    StartCoroutine(LoadScoreboardData());
     //}
 
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="_email"></param>
+    /// <param name="_password"></param>
+    /// <returns></returns>
     private IEnumerator Login(string _email, string _password)
     {
         //Call the Firebase auth signin function passing the email and password
