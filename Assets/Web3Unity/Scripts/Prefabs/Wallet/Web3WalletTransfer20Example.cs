@@ -17,9 +17,9 @@ public class Web3WalletTransfer20Example : MonoBehaviour
         Debug.Log("amount: " + _amount + "    " + "accont: " + _toAccount);
 
         // https://chainlist.org/
-        string chainId = "56"; // rinkeby
+        string chainId = "97"; // rinkeby ///mainnet 56
         // contract to interact with 
-        string contract = "0x5625188439b1E0AD7B7D1d08a3c470D04b41B5DF";
+        string contract = "0x30B0eEB64d03026c8E0d62637381Bb14dc6f048f"; 
         // value in wei
         string value = "0";
 
