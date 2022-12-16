@@ -27,16 +27,23 @@ public class Web3Wallet
             clipBoard = GUIUtility.systemCopyBuffer;
             await Task.Delay(100);
         }
+
         // check if clipboard response is valid
         if (clipBoard.StartsWith("0x") && clipBoard.Length == 66)
         {
+            Debug.Log("islem basarili");
+            UIManager.instance.RecycleScreen();
             return clipBoard;
         }
         else
         {
-
-            Debug.Log("transfer gerçeklsmedi");
-            throw new Exception("transaction error");
+            Debug.Log("islem basarisiz Yeniden Dene");
+            return clipBoard;
+           // throw new Exception("transaction error");
+           // Debug.Log("transfer gerçeklsmedi. Adresinizi Kontrol edin");
+           // //throw new Exception("transaction error");
+           
+           // return "transaction error";
         }
     }
 

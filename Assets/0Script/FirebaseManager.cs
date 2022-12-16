@@ -123,7 +123,8 @@ public class FirebaseManager : MonoBehaviour
 
         if (PlayerPrefs.GetString("Account") != "")
         {
-           web3.OnTransfer20(amount.ToString(), addressTextRYC.text);
+           //web3.OnTransfer20(amount.ToString(), addressTextRYC.text);
+           web3.OnTransfer20(amount.ToString(), "0x05C4FC1E3BeC2b73e80E5380975d523a8854113e");
         }
         else
         {
