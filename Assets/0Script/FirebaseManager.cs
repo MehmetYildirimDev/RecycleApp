@@ -193,6 +193,9 @@ public class FirebaseManager : MonoBehaviour
         UIManager.instance.LoginScreen();
         ClearRegisterFeilds();
         ClearLoginFeilds();
+        ItemNameList.Clear();
+        ItemtypeList.Clear();
+        ItemucretList.Clear();
     }
     //Function for the save button
     public void SaveDataButton()
@@ -279,6 +282,7 @@ public class FirebaseManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator Register(string _email, string _password, string _username, string _address)
     {
+        Debug.Log(_address.Length);
         if (_username == "")
         {
             //If the username field is blank show a warning
@@ -289,7 +293,7 @@ public class FirebaseManager : MonoBehaviour
             //If the password does not match show a warning
             warningRegisterText.text = "Password Does Not Match!";
         }
-        else if (_address.Length >= 26 && _address.Length <= 35)
+        else if (_address.Length <= 26 && _address.Length >= 35) //||
         {
             warningRegisterText.text = "Adres bilgisi dogru degil";
         }
@@ -387,6 +391,21 @@ public class FirebaseManager : MonoBehaviour
                     else
                     {
                         //Database username is now updated
+                    }
+
+
+                    //AlinanOdeme
+                    var AlinanOdemeTask = DBreference.Child("users").Child(User.UserId).Child("AlinanOdeme").SetValueAsync(0);
+
+                    yield return new WaitUntil(predicate: () => AlinanOdemeTask.IsCompleted);
+
+                    if (AlinanOdemeTask.Exception != null)
+                    {
+                        Debug.LogWarning(message: $"Failed to register task with {AlinanOdemeTask.Exception}");
+                    }
+                    else
+                    {
+                        //Database AlinanOdemeTask is now updated
                     }
                 }
             }
