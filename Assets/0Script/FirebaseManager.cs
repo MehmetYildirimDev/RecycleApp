@@ -7,11 +7,14 @@ using Firebase.Auth;
 using Firebase.Database;
 using TMPro;
 using System.Linq;
+using Firebase.Extensions;
 
 //logoya tiklayinca admin paneli acilsin
 
 public class FirebaseManager : MonoBehaviour
 {
+
+    public static FirebaseManager firebaseManager;
 
     //Firebase variables
     [Header("Firebase")]
@@ -47,6 +50,9 @@ public class FirebaseManager : MonoBehaviour
     public TMP_Text addressTextRYC;
     public TMP_Text itemTextRYC;
     public TMP_Text ucretTextRYC;
+    public TMP_Text HesaptakiParaTextRYC;
+
+
     public TMP_Dropdown dropdownRYC;
 
     public List<string> ItemNameList = new List<string>();
@@ -60,8 +66,21 @@ public class FirebaseManager : MonoBehaviour
     /// </summary>
     void Awake()
     {
+
+        if (firebaseManager == null)
+        {
+            firebaseManager = this;
+        }
+        else if (firebaseManager != null)
+        {
+            Debug.Log("Instance already exists, destroying object!");
+            Destroy(this);
+        }
+
+
+
         //Check that all of the necessary dependencies for Firebase are present on the system
-      FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
+        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
         {
             dependencyStatus = task.Result;
             if (dependencyStatus == DependencyStatus.Available)
@@ -371,6 +390,58 @@ public class FirebaseManager : MonoBehaviour
         }
     }
 
+
+    public void OdemeGuncelle()
+    {
+        StartCoroutine(coinUpdate());
+    }
+    /// <summary>
+    ///  hesaptaki parayi okur
+    /// </summary>
+    public void HesaptakiCoiniOku()
+    {
+        DBreference.Child("users").Child(User.UserId).Child("AlinanOdeme").GetValueAsync().ContinueWithOnMainThread(task => {
+            if (task.IsFaulted)
+            {
+                Debug.Log("Database Hata");
+                
+            }
+            else if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+                if (snapshot.GetRawJsonValue()==null)
+                {
+                    Debug.Log("null");
+                 
+                }
+                else
+                {
+                    HesaptakiParaTextRYC.text = snapshot.Value.ToString();
+                }
+            }
+
+           
+        });
+       
+    }
+    public IEnumerator coinUpdate()
+    {
+        int deger = Convert.ToInt32(ucretTextRYC.text) + Convert.ToInt32(HesaptakiParaTextRYC.text);
+        //adress
+        var coinTask = DBreference.Child("users").Child(User.UserId).Child("AlinanOdeme").SetValueAsync(deger);
+
+        yield return new WaitUntil(predicate: () => coinTask.IsCompleted);
+
+        if (coinTask.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {coinTask.Exception}");
+        }
+        else
+        {
+            //Database adress is now updated
+        }
+    }
+
     private IEnumerator UpdateUsernameAuth(string _username)
     {
         //Create a user profile and set the username
@@ -476,6 +547,8 @@ public class FirebaseManager : MonoBehaviour
         }
 
         StartCoroutine(itemGet());//dropdown degeri
+        ///
+        HesaptakiCoiniOku();
     }
 
     private IEnumerator itemGet()

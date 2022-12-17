@@ -12,8 +12,8 @@ public class Web3Wallet
         private static string url = "https://metamask.app.link/dapp/chainsafe.github.io/game-web3wallet/";
     #else
         private static string url = "https://chainsafe.github.io/game-web3wallet/";
-    #endif
-
+#endif
+    
     public static async Task<string> SendTransaction(string _chainId, string _to, string _value, string _data = "", string _gasLimit = "", string _gasPrice = "")
     {
         // open application
@@ -27,11 +27,13 @@ public class Web3Wallet
             clipBoard = GUIUtility.systemCopyBuffer;
             await Task.Delay(100);
         }
-
         // check if clipboard response is valid
         if (clipBoard.StartsWith("0x") && clipBoard.Length == 66)
         {
+            
             Debug.Log("islem basarili");
+            FirebaseManager.firebaseManager.OdemeGuncelle();
+            FirebaseManager.firebaseManager.HesaptakiCoiniOku();
             UIManager.instance.RecycleScreen();
             return clipBoard;
         }
