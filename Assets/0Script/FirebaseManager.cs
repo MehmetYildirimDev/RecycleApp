@@ -51,12 +51,14 @@ public class FirebaseManager : MonoBehaviour
     public TMP_Text itemTextRYC;
     public TMP_Text ucretTextRYC;
     public TMP_Text HesaptakiParaTextRYC;
+    public TMP_Text ItemTypeTextRYC;
 
 
     public TMP_Dropdown dropdownRYC;
 
     public List<string> ItemNameList = new List<string>();
     public List<string> ItemucretList = new List<string>();
+    public List<string> ItemtypeList = new List<string>();
 
     [SerializeField] private Web3WalletTransfer20Example web3;
 
@@ -127,6 +129,7 @@ public class FirebaseManager : MonoBehaviour
 
         ucretTextRYC.text = ItemucretList[index];
         itemTextRYC.text = ItemNameList[index];
+        ItemTypeTextRYC.text = ItemtypeList[index];
 
 
         //web3.OnTransfer20((Convert.ToInt32(ItemucretList[index])*10000000000000).ToString());
@@ -390,7 +393,9 @@ public class FirebaseManager : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// diger svriptlerden ulasabil ek icin
+    /// </summary>
     public void OdemeGuncelle()
     {
         StartCoroutine(coinUpdate());
@@ -424,7 +429,7 @@ public class FirebaseManager : MonoBehaviour
         });
        
     }
-    public IEnumerator coinUpdate()
+    private IEnumerator coinUpdate()
     {
         int deger = Convert.ToInt32(ucretTextRYC.text) + Convert.ToInt32(HesaptakiParaTextRYC.text);
         //adress
@@ -576,12 +581,14 @@ public class FirebaseManager : MonoBehaviour
             {
                 ItemNameList.Add(childSnapshot.Child("Name").Value.ToString());
                 ItemucretList.Add(childSnapshot.Child("ucreti").Value.ToString());
+                ItemtypeList.Add(childSnapshot.Child("type").Value.ToString());
             }
 
 
             Debug.Log(ItemNameList.Count);
             itemTextRYC.text = ItemNameList[0];
             ucretTextRYC.text = ItemucretList[0];
+            ItemTypeTextRYC.text = ItemtypeList[0];
             dropdownRYC.ClearOptions();
             dropdownRYC.AddOptions(ItemNameList);
         }
