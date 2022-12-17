@@ -293,7 +293,7 @@ public class FirebaseManager : MonoBehaviour
             //If the password does not match show a warning
             warningRegisterText.text = "Password Does Not Match!";
         }
-        else if (_address.Length <= 26 && _address.Length >= 35) //||
+        else if (_address.Length < 26 || _address.Length > 42) //||
         {
             warningRegisterText.text = "Adres bilgisi dogru degil";
         }
